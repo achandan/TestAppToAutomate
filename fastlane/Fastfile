@@ -1,0 +1,35 @@
+fastlane_version "1.83.0"
+#force true
+default_platform :ios
+
+platform :ios do
+
+lane :beta do
+#increment_build_number
+#cert
+sigh
+#cocoapods
+gym(scheme: "TestApp") # Build your app - more options available
+ENV["DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS"] = "-t DAV"
+pilot
+end
+
+lane :release do
+#increment_build_number
+#cert
+sigh
+#scan
+snapshot
+#cocoapods
+gym(scheme: "TestApp") # Build your app - more options available
+ENV["DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS"] = "-t DAV"
+ENV['FASTLANE_XCODE_LIST_TIMEOUT']='600'
+deliver(      skip_screenshots: false,
+      skip_metadata: false,
+      submit_for_review: true)
+end
+lane :snapshotToDo do
+snapshot
+end
+end
+

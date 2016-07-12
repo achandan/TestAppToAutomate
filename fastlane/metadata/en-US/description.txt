@@ -1,0 +1,1 @@
+This is test app.Just to test app store release via fatlane
